@@ -16,7 +16,7 @@ public class Dishes {
         this.picture = picture;
     }
 
-    // Method to print all attributes of the dish
+    // Method to print all attributes — Chapter 6
     public void getItem() {
         System.out.println("Dish Name: " + name);
         System.out.println("Rating: " + rating);
@@ -46,22 +46,22 @@ public class Dishes {
         System.out.println("Picture updated to: " + (newPicture != null ? newPicture.getAbsolutePath() : "No picture"));
     }
 
-    // Main method to interact with the user
+    // Main method to interact with the user — Chapter 4
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Dishes dish = null;
 
-        System.out.println("Welcome to the Dishes Management System.");
+        System.out.println("Here are the dishes you've eaten!");
         while (true) {
             System.out.println("Type 'add item' to create a new dish, 'edit item' to modify it, or 'exit' to quit:");
             String input = scanner.nextLine().toLowerCase();
 
-            switch (input) {
+            switch (input) { // Chapter 3
                 case "add item":
                     dish = createNewDish(scanner);
-                    System.out.println("New dish created successfully!");
-                    dish.getItem();
-                    break;
+                    System.out.println("New dish successfully added!");
+                    dish.getItem(); //
+                    break; // Chapter 2
 
                 case "edit item":
                     if (dish == null) {
