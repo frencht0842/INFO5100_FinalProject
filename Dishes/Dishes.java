@@ -76,39 +76,39 @@ public class Dishes {
                     scanner.close();
                     return;
 
-                default:
+                default: // Chapter 1
                     System.out.println("Invalid command. Please try again.");
                     break;
             }
         }
     }
 
-    // Method to create a new dish with user input
+    // Method to create new dish with user input
     public static Dishes createNewDish(Scanner scanner) {
         System.out.print("Enter dish name: ");
         String name = scanner.nextLine();
 
         System.out.print("Enter rating (integer value): ");
-        int rating = Integer.parseInt(scanner.nextLine());
+        int rating = Integer.parseInt(scanner.nextLine()); // Chapter 10
 
         System.out.print("Enter price: ");
         double price = Double.parseDouble(scanner.nextLine());
 
         System.out.print("Enter picture file path (or leave blank for no picture): ");
         String filePath = scanner.nextLine();
-        File picture = filePath.isEmpty() ? null : new File(filePath);
+        File picture = filePath.isEmpty() ? null : new File(filePath); // Chapter 12, will need help with this
 
         return new Dishes(name, rating, price, picture);
     }
 
-    // Method to edit an existing dish
+    // Method to edit existing dish
     public static void editDish(Dishes dish, Scanner scanner) {
         while (true) {
             System.out.println("\nCurrent Dish Details:");
             dish.getItem();
             System.out.println("\nType 'name' to edit the name, 'rating' to edit the rating, 'price' to edit the price, 'picture' to edit the picture, or 'back' to return:");
 
-            String command = scanner.nextLine().toLowerCase();
+            String command = scanner.nextLine().toLowerCase(); // Chapter 3
             switch (command) {
                 case "name":
                     System.out.print("Enter new dish name: ");
