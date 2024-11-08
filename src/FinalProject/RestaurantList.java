@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RestaurantList {
   private String name;
   private String location;
-  private ArrayList<Restaurant> restaurants;
+  private ArrayList<Restaurant> restaurants;;
   
   // Constructor, name only
   public RestaurantList(String name) {
@@ -33,5 +33,11 @@ public class RestaurantList {
   
   public void removeRestaurant(Restaurant restaurant) {
 	  this.restaurants.remove(restaurant);
+  }
+  
+  public void printRestaurants(){
+	  for(int i=0; i < this.restaurants.size(); i++) {
+		  this.restaurants.get(i).printRestaurantDetails();
+	  }
   }
 }

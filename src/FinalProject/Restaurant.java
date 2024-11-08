@@ -37,6 +37,11 @@ public class Restaurant {
 		this.rating = rating;
 	}
 	
+	public void printRestaurantDetails() {
+		System.out.println("Name: " + this.name);
+		System.out.println("Rating: " + this.rating);
+	}
+	
 	// TODO: test in main
 	public static void main() {}
 }
