@@ -6,6 +6,7 @@ public class Restaurant {
 	private String name;
 	private ArrayList<Dishes> dishes;
 	private ArrayList<String> categories;
+	private int rating;
 	
 	// Constructor
 	public Restaurant(String name) {
@@ -32,6 +33,9 @@ public class Restaurant {
 		}
 	}
 	
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 	
 	// TODO: test in main
 	public static void main() {}
