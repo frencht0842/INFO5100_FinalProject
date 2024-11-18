@@ -3,7 +3,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class Dishes {
-    private String name;
+    String name;
     private int rating;
     private double price;
     private File picture;
