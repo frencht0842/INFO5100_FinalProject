@@ -7,8 +7,7 @@ public class Categories {
 	    private static class RestaurantCategory {
 	        private String name;
 	        private String description;
-	        private ArrayList<RestaurantList.Restaurant> restaurants;
-			private ArrayList restaurants;
+	        private ArrayList<Restaurant> restaurants;
 
 	        public RestaurantCategory(String name, String description) {
 	            this.name = name;
