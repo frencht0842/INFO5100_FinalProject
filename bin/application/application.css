@@ -1,1 +1,19 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.button 
+{
+	-fx-background-color: #2a92d3;
+    -fx-text-fill: white;
+    -fx-pref-width: 160px;
+    -fx-pref-height: 60px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+
+
