@@ -7,10 +7,38 @@ public class Restaurant {
 	private ArrayList<Dishes> dishes;
 	private ArrayList<String> categories;
 	private int rating;
+	private String imgUrl;
+	private String location;
 	
 	// Constructor
 	public Restaurant(String name) {
 		this.name = name;
+	}
+	
+	public Restaurant(String name, int rating) {
+		this.name = name;
+		this.rating = rating;
+	}
+	
+	public Restaurant(String name, int rating, String imgUrl, String location) {
+		this.name = name;
+		this.rating = rating;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public int getRating() {
+		return this.rating;
+	}
+	
+	public String getImgUrl() {
+		return this.imgUrl;
+	}
+	
+	public String getLocation() {
+		return this.location;
 	}
 	
 	public void addDish(Dishes dish) {
