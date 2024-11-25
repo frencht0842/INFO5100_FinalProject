@@ -34,8 +34,8 @@ public class Main extends Application {
         TextField ratingInput = new TextField();
         ratingInput.setPromptText("Rating");
 
-        TextField textField4 = new TextField();
-        ratingInput.setPromptText("Image URL");
+        TextField imgUrlInput = new TextField();
+        imgUrlInput.setPromptText("Image URL");
 
         Button submitButton = new Button("+ Create Restaurant");
 
@@ -87,10 +87,13 @@ public class Main extends Application {
 
     public static GridPane renderRestaurants() {
     	GridPane rezzies = new GridPane();
+		 rezzies.add(new Label("Title"), 0, 1);  // Column 0, Row (i + 1)
+		 rezzies.add(new Label("Rating"), 1, 1);
+
     	for(int i = 0; i < restaurants.size(); i++) {
     		Restaurant res = restaurants.get(i);
-    		 rezzies.add(new Label(res.getName()), 0, i + 1);  // Column 0, Row (i + 1)
-             rezzies.add(new Label(Integer.toString(res.getRating())), 1, i + 1); // Column 1, Row (i + 1)
+    		 rezzies.add(new Label(res.getName()), 0, i + 2);  // Column 0, Row (i + 1)
+             rezzies.add(new Label(Integer.toString(res.getRating())), 1, i + 2); // Column 1, Row (i + 1)
 //             rezzies.add(new Label(res.getCategory()), 2, i + 1); // Column 2, Row (i + 1)
     	}
 
