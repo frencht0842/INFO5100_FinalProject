@@ -24,25 +24,25 @@ public class Main extends Application {
       	GridPane root = new GridPane();
 
       	// Restaurant inputs
-        TextField textField1 = new TextField();
-        textField1.setPromptText("Name: ");
+        TextField nameInput = new TextField();
+        nameInput.setPromptText("Name: ");
 
-        TextField textField2 = new TextField();
-        textField2.setPromptText("Category");
+        TextField categoryInput = new TextField();
+        categoryInput.setPromptText("Category");
 
-        TextField textField3 = new TextField();
-        textField3.setPromptText("Ratng");
+        TextField ratingInput = new TextField();
+        ratingInput.setPromptText("Rating");
 
         TextField textField4 = new TextField();
-        textField3.setPromptText("Image URL");
+        ratingInput.setPromptText("Image URL");
 
-        Button submitButton = new Button("Submit");
+        Button submitButton = new Button("+ Create Restaurant");
 
         submitButton.setOnAction(e -> {
-            String input1 = textField1.getText();
-            String input2 = textField2.getText();
-            int rating = Integer.parseInt(textField3.getText());
-            Restaurant newRestaurant = new Restaurant(input1, rating);
+            String name = nameInput.getText();
+            String category = categoryInput.getText();
+            int rating = Integer.parseInt(ratingInput.getText());
+            Restaurant newRestaurant = new Restaurant(name, rating);
             restaurants.add(newRestaurant);
             newRestaurant.printRestaurantDetails();
             System.out.println(restaurants.size());
@@ -50,9 +50,9 @@ public class Main extends Application {
         });
 
         // Add components to the grid
-        root.add(textField1, 0, 0); // Column 0, Row 0
-        root.add(textField2, 0, 1); // Column 0, Row 1
-        root.add(textField3, 0, 2);
+        root.add(nameInput, 0, 0); // Column 0, Row 0
+        root.add(categoryInput, 0, 1); // Column 0, Row 1
+        root.add(ratingInput, 0, 2);
         root.add(submitButton, 0, 3);
 
         // Set some padding and spacing
@@ -60,9 +60,9 @@ public class Main extends Application {
         root.setVgap(10); // Vertical spacing between rows
         root.setStyle("-fx-padding: 20;");
 
-        Scene scene = new Scene(root, 480, 800);
+        Scene restaurantCreationScene = new Scene(root, 480, 800);
         primaryStage.setTitle("Create a New Restaurant");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(restaurantCreationScene);
 
         // Display the stage
         primaryStage.show();
