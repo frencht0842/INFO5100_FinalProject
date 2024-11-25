@@ -16,11 +16,12 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	static ArrayList <Restaurant> restaurants = new ArrayList();
+
     @Override
     public void start(Stage primaryStage) {
     	// TODO: use RestaurantList class
     	// TODO: Add print all restaurants method to resList class
-    	ArrayList <Restaurant> restaurants = new ArrayList();
       	GridPane root = new GridPane();
 
       	// Restaurant inputs
@@ -38,17 +39,6 @@ public class Main extends Application {
 
         Button submitButton = new Button("+ Create Restaurant");
 
-        submitButton.setOnAction(e -> {
-            String name = nameInput.getText();
-            String category = categoryInput.getText();
-            int rating = Integer.parseInt(ratingInput.getText());
-            Restaurant newRestaurant = new Restaurant(name, rating);
-            restaurants.add(newRestaurant);
-            newRestaurant.printRestaurantDetails();
-            System.out.println(restaurants.size());
-            //TODO: change screens on submit
-        });
-
         // Add components to the grid
         root.add(nameInput, 0, 0); // Column 0, Row 0
         root.add(categoryInput, 0, 1); // Column 0, Row 1
@@ -64,8 +54,47 @@ public class Main extends Application {
         primaryStage.setTitle("Create a New Restaurant");
         primaryStage.setScene(restaurantCreationScene);
 
+
+
+
+        submitButton.setOnAction(e -> {
+            String name = nameInput.getText();
+            String category = categoryInput.getText();
+            int rating = Integer.parseInt(ratingInput.getText());
+            Restaurant newRestaurant = new Restaurant(name, rating);
+            restaurants.add(newRestaurant);
+            newRestaurant.printRestaurantDetails();
+            System.out.println(restaurants.size());
+            //TODO: clear inputs after submit
+
+            // CHange screens on submit
+            GridPane root2 = renderRestaurants();
+            Button changeSceneButton = new Button("Switch to add res scene");
+            root2.add(changeSceneButton, 0,0);
+            changeSceneButton.setOnAction(evt -> {
+                primaryStage.setScene(restaurantCreationScene);
+            });
+            Scene secondScene = new Scene(root2, 480, 800);
+
+            primaryStage.setScene(secondScene);
+        });
+
+
+
         // Display the stage
         primaryStage.show();
+    }
+
+    public static GridPane renderRestaurants() {
+    	GridPane rezzies = new GridPane();
+    	for(int i = 0; i < restaurants.size(); i++) {
+    		Restaurant res = restaurants.get(i);
+    		 rezzies.add(new Label(res.getName()), 0, i + 1);  // Column 0, Row (i + 1)
+             rezzies.add(new Label(Integer.toString(res.getRating())), 1, i + 1); // Column 1, Row (i + 1)
+//             rezzies.add(new Label(res.getCategory()), 2, i + 1); // Column 2, Row (i + 1)
+    	}
+
+    	return rezzies;
     }
 
     public static void main(String[] args) {
