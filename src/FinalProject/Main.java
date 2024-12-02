@@ -35,24 +35,30 @@ public class Main extends Application {
         ratingInput.setPromptText("Rating");
 
         TextField imgUrlInput = new TextField();
-        imgUrlInput.setPromptText("Image URL");
+        imgUrlInput.setPromptText("Image URL (optional)");
 
         TextField locationInput = new TextField();
-        locationInput.setPromptText("City");
+        locationInput.setPromptText("City, State, Country");
 
         Button submitButton = new Button("+ Create Restaurant");
 
-        // Add components to the grid
-        root.add(nameInput, 0, 0); // Column 0, Row 0
-//        root.add(categoryInput, 0, 1); // Column 0, Row 1
-        root.add(ratingInput, 0, 2);
-        root.add(locationInput, 0, 3);
-        root.add(imgUrlInput, 0, 4);
-        root.add(submitButton, 0, 5);
+        root.add(new Label("Name: "), 0, 0);
+        root.add(nameInput, 1, 0);
 
-        // Set some padding and spacing
-        root.setHgap(10); // Horizontal spacing between columns
-        root.setVgap(10); // Vertical spacing between rows
+        root.add(new Label("Rating: "), 0, 1);
+        root.add(ratingInput, 1, 1);
+
+        root.add(new Label("Location: "), 0, 2);
+        root.add(locationInput, 1, 2);
+
+
+        root.add(imgUrlInput, 1, 3);
+        root.add(new Label("Link to image: "), 0, 3);
+
+        root.add(submitButton, 1, 4);
+
+        root.setHgap(10);
+        root.setVgap(10);
         root.setStyle("-fx-padding: 20;");
 
         Scene restaurantCreationScene = new Scene(root, 480, 800);
@@ -93,27 +99,30 @@ public class Main extends Application {
     }
 
     public static GridPane renderRestaurants() {
-    	GridPane rezzies = new GridPane();
-		 rezzies.add(new Label("Title"), 0, 1);  // Column 0, Row (i + 1)
-		 rezzies.add(new Label("Rating"), 1, 1);
-		 rezzies.add(new Label("Location"), 2, 1);
+    	GridPane restaurantPane = new GridPane();
+        restaurantPane.setHgap(10);
+        restaurantPane.setVgap(10);
+        restaurantPane.setStyle("-fx-padding: 20;");
+		restaurantPane.add(new Label("Title"), 0, 1);  // Column 0, Row (i + 1)
+		restaurantPane.add(new Label("Rating"), 1, 1);
+		restaurantPane.add(new Label("Location"), 2, 1);
 
     	for(int i = 0; i < restaurants.size(); i++) {
     		Restaurant res = restaurants.get(i);
-    		 rezzies.add(new Label(res.getName()), 0, i + 2);  // Column 0, Row (i + 1)
-             rezzies.add(new Label(Integer.toString(res.getRating())), 1, i + 2); // Column 1, Row (i + 1)
-             rezzies.add(new Label(res.getLocation()), 2, i + 2);
+    		 restaurantPane.add(new Label(res.getName()), 0, i + 2);  // Column 0, Row (i + 1)
+             restaurantPane.add(new Label(Integer.toString(res.getRating())), 1, i + 2); // Column 1, Row (i + 1)
+             restaurantPane.add(new Label(res.getLocation()), 2, i + 2);
 
 //             Image image = new Image(res.getImgUrl()); // Replace with your image URL
 //             ImageView imageView = new ImageView(image);
 
 //             imageView.setFitWidth(200); // Set width
 //             imageView.setPreserveRatio(true); // Preserve aspect ratio
-//             rezzies.add(imageView, i, i+4);
-//             rezzies.add(new Label(res.getCategory()), 2, i + 1); // Column 2, Row (i + 1)
+//             restaurantPane.add(imageView, i, i+4);
+//             restaurantPane.add(new Label(res.getCategory()), 2, i + 1); // Column 2, Row (i + 1)
     	}
 
-    	return rezzies;
+    	return restaurantPane;
     }
 
     public static void main(String[] args) {
