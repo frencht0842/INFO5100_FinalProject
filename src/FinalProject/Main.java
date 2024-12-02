@@ -51,7 +51,6 @@ public class Main extends Application {
         root.add(new Label("Location: "), 0, 2);
         root.add(locationInput, 1, 2);
 
-
         root.add(imgUrlInput, 1, 3);
         root.add(new Label("Link to image: "), 0, 3);
 
@@ -62,7 +61,7 @@ public class Main extends Application {
         root.setStyle("-fx-padding: 20;");
 
         Scene restaurantCreationScene = new Scene(root, 480, 800);
-        primaryStage.setTitle("Create a New Restaurant");
+        primaryStage.setTitle("Add a New Restaurant");
         primaryStage.setScene(restaurantCreationScene);
 
 
@@ -82,7 +81,7 @@ public class Main extends Application {
 
             // CHange screens on submit
             GridPane root2 = renderRestaurants();
-            Button changeSceneButton = new Button("Switch to add res scene");
+            Button changeSceneButton = new Button("+ Add New Restaurant");
             root2.add(changeSceneButton, 0,0);
             changeSceneButton.setOnAction(evt -> {
                 primaryStage.setScene(restaurantCreationScene);
@@ -103,23 +102,34 @@ public class Main extends Application {
         restaurantPane.setHgap(10);
         restaurantPane.setVgap(10);
         restaurantPane.setStyle("-fx-padding: 20;");
-		restaurantPane.add(new Label("Title"), 0, 1);  // Column 0, Row (i + 1)
-		restaurantPane.add(new Label("Rating"), 1, 1);
-		restaurantPane.add(new Label("Location"), 2, 1);
 
+        Label titleLabel = new Label("My Restaurants");
+        titleLabel.setStyle("-fx-font-family: 'Brush Script MT'; -fx-font-size: 34px;");
+        restaurantPane.add(titleLabel, 2, 1);
+
+
+		// List of restaurants
     	for(int i = 0; i < restaurants.size(); i++) {
     		Restaurant res = restaurants.get(i);
-    		 restaurantPane.add(new Label(res.getName()), 0, i + 2);  // Column 0, Row (i + 1)
-             restaurantPane.add(new Label(Integer.toString(res.getRating())), 1, i + 2); // Column 1, Row (i + 1)
-             restaurantPane.add(new Label(res.getLocation()), 2, i + 2);
 
-//             Image image = new Image(res.getImgUrl()); // Replace with your image URL
-//             ImageView imageView = new ImageView(image);
+    		int numRowsPerRes = 4;
+    		int firstRowIndex = i * numRowsPerRes;
 
-//             imageView.setFitWidth(200); // Set width
-//             imageView.setPreserveRatio(true); // Preserve aspect ratio
-//             restaurantPane.add(imageView, i, i+4);
-//             restaurantPane.add(new Label(res.getCategory()), 2, i + 1); // Column 2, Row (i + 1)
+    		Label nameLabel = new Label(res.getName());
+    		nameLabel.setStyle("-fx-font-weight: bold;");
+    		 restaurantPane.add(nameLabel, 0, firstRowIndex + 2);
+             restaurantPane.add(new Label(Integer.toString(res.getRating()) + "/10"), 1, firstRowIndex + 2);
+             restaurantPane.add(new Label(res.getLocation()), 0, firstRowIndex + 3);
+
+             if(res.getImgUrl() != null && res.getImgUrl().contains("www.")) {
+            	 Image image = new Image(res.getImgUrl());
+                 ImageView imageView = new ImageView(image);
+                 imageView.setFitHeight(70);
+                 imageView.setPreserveRatio(true);
+                 restaurantPane.add(imageView, 4, firstRowIndex+2);
+             }
+
+             //restaurantPane.add(new Label(res.getCategory()), 2, i + 1);
     	}
 
     	return restaurantPane;
