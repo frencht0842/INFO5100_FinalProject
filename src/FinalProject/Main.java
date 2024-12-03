@@ -69,7 +69,7 @@ public class Main extends Application {
 
         submitButton.setOnAction(e -> {
             String name = nameInput.getText();
-//            String category = categoryInput.getText();
+            //String category = categoryInput.getText();
             int rating = Integer.parseInt(ratingInput.getText());
             String location = locationInput.getText();
             String imgUrl = imgUrlInput.getText();
@@ -79,7 +79,7 @@ public class Main extends Application {
             newRestaurant.printRestaurantDetails();
             //TODO: clear inputs after submit
 
-            // CHange screens on submit
+            // Change screens on submit
             GridPane root2 = renderRestaurants();
             Button changeSceneButton = new Button("+ Add New Restaurant");
             root2.add(changeSceneButton, 0,0);
@@ -92,8 +92,6 @@ public class Main extends Application {
         });
 
 
-
-        // Display the stage
         primaryStage.show();
     }
 
@@ -129,7 +127,6 @@ public class Main extends Application {
                  restaurantPane.add(imageView, 4, firstRowIndex+2);
              }
 
-             //restaurantPane.add(new Label(res.getCategory()), 2, i + 1);
     	}
 
     	return restaurantPane;
