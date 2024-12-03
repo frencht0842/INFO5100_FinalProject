@@ -60,9 +60,9 @@ public class Main extends Application {
         root.setVgap(10);
         root.setStyle("-fx-padding: 20;");
 
-        Scene restaurantCreationScene = new Scene(root, 480, 800);
+        Scene addRestaurantsScene = new Scene(root, 480, 800);
         primaryStage.setTitle("Add a New Restaurant");
-        primaryStage.setScene(restaurantCreationScene);
+        primaryStage.setScene(addRestaurantsScene);
 
 
 
@@ -84,11 +84,11 @@ public class Main extends Application {
             Button changeSceneButton = new Button("+ Add New Restaurant");
             root2.add(changeSceneButton, 0,0);
             changeSceneButton.setOnAction(evt -> {
-                primaryStage.setScene(restaurantCreationScene);
+                primaryStage.setScene(addRestaurantsScene);
             });
-            Scene secondScene = new Scene(root2, 480, 800);
+            Scene viewRestaurantsScene = new Scene(root2, 480, 800);
 
-            primaryStage.setScene(secondScene);
+            primaryStage.setScene(viewRestaurantsScene);
         });
 
 
