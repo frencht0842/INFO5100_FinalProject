@@ -1,5 +1,7 @@
 package FinalProject;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ public class RestaurantList {
 	  }
 
 	  public void writeRestaurantsToCSV() {
-	    String fileName = this.getName();
+	    String fileName = this.getName() + ".csv";
 	    try (FileWriter writer = new FileWriter(fileName)) {
 	        writer.append("Name,Rating,Location\n");
 
@@ -65,4 +67,38 @@ public class RestaurantList {
 	        System.err.println("Error writing to file: " + e.getMessage());
 	    }
 	  }
+
+	  public RestaurantList importRestaurantsFromCSV(String fileName) {
+	        RestaurantList restaurantList = new RestaurantList(fileName);
+
+	        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+	            String line;
+
+	            // Skip the header line
+	            reader.readLine();
+
+	            while ((line = reader.readLine()) != null) {
+	                String[] fields = line.split(",");
+
+	                if (fields.length == 3) {
+	                    String name = fields[0].trim();
+	                    int rating = Integer.parseInt(fields[1].trim());
+	                    String location = fields[2].trim();
+
+	                    Restaurant restaurant = new Restaurant(name, rating, location);
+	                    restaurantList.addRestaurant(restaurant);
+	                } else {
+	                    System.err.println("Invalid line format: " + line);
+	                }
+	            }
+
+	            System.out.println("CSV file imported successfully: " + fileName);
+	        } catch (IOException e) {
+	            System.err.println("Error reading the file: " + e.getMessage());
+	        } catch (NumberFormatException e) {
+	            System.err.println("Error parsing number from file: " + e.getMessage());
+	        }
+
+	        return restaurantList;
+	    }
 	}

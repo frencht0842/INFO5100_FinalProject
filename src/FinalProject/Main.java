@@ -88,6 +88,11 @@ public class Main extends Application {
             });
 
             Button importButton = new Button("< Import CSV");
+            importButton.setOnAction(ev -> {
+            	restaurants = restaurants.importRestaurantsFromCSV("My Restaurants.csv");
+            	// TODO: refresh scene / reredner list
+            });
+
             root2.add(changeSceneButton, 0,0);
             root2.add(exportButton, 1, 0);
             root2.add(importButton, 2, 0);
