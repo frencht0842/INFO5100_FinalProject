@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class RestaurantList {
 	  private String name;
 	  private String location;
-	  private ArrayList<Restaurant> restaurants;;
+	  private ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 
 	  // Constructor, name only
 	  public RestaurantList(String name) {
@@ -30,7 +30,7 @@ public class RestaurantList {
 	  }
 
 	  public void addRestaurant(Restaurant restaurant) {
-		  if(!this.restaurants.contains(restaurant)) {
+		  if(this.getRestaurants() != null && !this.getRestaurants().contains(restaurant)) {
 			  this.restaurants.add(restaurant);
 		  }	 else {
 			  System.out.println(this.name + " already contains this restaurant.");
@@ -50,10 +50,8 @@ public class RestaurantList {
 	  public void writeRestaurantsToCSV() {
 	    String fileName = this.getName();
 	    try (FileWriter writer = new FileWriter(fileName)) {
-	        // Write the header line
 	        writer.append("Name,Rating,Location\n");
 
-	        // Write each restaurant's details
 	        for (Restaurant restaurant : this.restaurants) {
 	            writer.append(restaurant.getName())
 	                  .append(",")

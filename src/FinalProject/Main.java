@@ -16,7 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	static ArrayList <Restaurant> restaurants = new ArrayList();
+	static RestaurantList restaurants = new RestaurantList("My Restaurants");
 
     @Override
     public void start(Stage primaryStage) {
@@ -75,14 +75,22 @@ public class Main extends Application {
             String imgUrl = imgUrlInput.getText();
             System.out.println(name + rating + imgUrl + location);
             Restaurant newRestaurant = new Restaurant(name, rating, imgUrl, location);
-            restaurants.add(newRestaurant);
+            restaurants.addRestaurant(newRestaurant);
             newRestaurant.printRestaurantDetails();
             //TODO: clear inputs after submit
 
             // Change screens on submit
             GridPane root2 = renderRestaurants();
-            Button changeSceneButton = new Button("+ Add New Restaurant");
+            Button changeSceneButton = new Button("+ Add New ");
+            Button exportButton = new Button("> Export CSV");
+            exportButton.setOnAction(ev -> {
+                restaurants.writeRestaurantsToCSV();
+            });
+
+            Button importButton = new Button("< Import CSV");
             root2.add(changeSceneButton, 0,0);
+            root2.add(exportButton, 1, 0);
+            root2.add(importButton, 2, 0);
             changeSceneButton.setOnAction(evt -> {
                 primaryStage.setScene(addRestaurantsScene);
             });
@@ -107,8 +115,8 @@ public class Main extends Application {
 
 
 		// List of restaurants
-    	for(int i = 0; i < restaurants.size(); i++) {
-    		Restaurant res = restaurants.get(i);
+    	for(int i = 0; i < restaurants.getRestaurants().size(); i++) {
+    		Restaurant res = restaurants.getRestaurants().get(i);
 
     		int numRowsPerRes = 4;
     		int firstRowIndex = i * numRowsPerRes;
