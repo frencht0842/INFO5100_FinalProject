@@ -16,7 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	static RestaurantList restaurants = new RestaurantList("My Restaurants");
+		static RestaurantList restaurants = new RestaurantList("My Restaurants");
 
     @Override
     public void start(Stage primaryStage) {
@@ -82,18 +82,53 @@ public class Main extends Application {
             // Change screens on submit
             GridPane root2 = renderRestaurants();
             Button changeSceneButton = new Button("+ Add New ");
+            root2.add(changeSceneButton, 0, 0);
+            changeSceneButton.setStyle(
+                    "-fx-background-color: #4CAF50; " +  // Green background
+                    "-fx-text-fill: white; " +          // White text color
+                    "-fx-font-size: 14px; " +           // Font size
+                    "-fx-font-weight: bold; " +         // Bold text
+                    "-fx-padding: 10px 20px; " +        // Padding inside the button
+                    "-fx-background-radius: 5px; " +   // Rounded corners
+                    "-fx-border-radius: 5px; " +       // Border rounding
+                    "-fx-border-color: #388E3C; " +    // Border color
+                    "-fx-border-width: 2px;"           // Border width
+                );
+
             Button exportButton = new Button("> Export CSV");
+            exportButton.setStyle(
+                    "-fx-background-color: #4CAF50; " +  // Green background
+                    "-fx-text-fill: white; " +          // White text color
+                    "-fx-font-size: 14px; " +           // Font size
+                    "-fx-font-weight: bold; " +         // Bold text
+                    "-fx-padding: 10px 20px; " +        // Padding inside the button
+                    "-fx-background-radius: 5px; " +   // Rounded corners
+                    "-fx-border-radius: 5px; " +       // Border rounding
+                    "-fx-border-color: #388E3C; " +    // Border color
+                    "-fx-border-width: 2px;"           // Border width
+                );
+
             exportButton.setOnAction(ev -> {
                 restaurants.writeRestaurantsToCSV();
             });
 
             Button importButton = new Button("< Import CSV");
+            importButton.setStyle(
+                    "-fx-background-color: #4CAF50; " +  // Green background
+                    "-fx-text-fill: white; " +          // White text color
+                    "-fx-font-size: 14px; " +           // Font size
+                    "-fx-font-weight: bold; " +         // Bold text
+                    "-fx-padding: 10px 20px; " +        // Padding inside the button
+                    "-fx-background-radius: 5px; " +   // Rounded corners
+                    "-fx-border-radius: 5px; " +       // Border rounding
+                    "-fx-border-color: #388E3C; " +    // Border color
+                    "-fx-border-width: 2px;"           // Border width
+                );
             importButton.setOnAction(ev -> {
             	restaurants = restaurants.importRestaurantsFromCSV("My Restaurants.csv");
             	// TODO: refresh scene / reredner list
             });
 
-            root2.add(changeSceneButton, 0,0);
             root2.add(exportButton, 1, 0);
             root2.add(importButton, 2, 0);
             changeSceneButton.setOnAction(evt -> {
@@ -111,12 +146,13 @@ public class Main extends Application {
     public static GridPane renderRestaurants() {
     	GridPane restaurantPane = new GridPane();
         restaurantPane.setHgap(10);
-        restaurantPane.setVgap(10);
+        restaurantPane.setVgap(5);
         restaurantPane.setStyle("-fx-padding: 20;");
 
         Label titleLabel = new Label("My Restaurants");
-        titleLabel.setStyle("-fx-font-family: 'Brush Script MT'; -fx-font-size: 34px;");
-        restaurantPane.add(titleLabel, 2, 1);
+        titleLabel.setStyle("-fx-font-family: 'Helvetica'; -fx-font-size: 30px; -fx-padding: 10px;");
+
+        restaurantPane.add(titleLabel, 0, 1);
 
 
 		// List of restaurants
@@ -127,17 +163,47 @@ public class Main extends Application {
     		int firstRowIndex = i * numRowsPerRes;
 
     		Label nameLabel = new Label(res.getName());
-    		nameLabel.setStyle("-fx-font-weight: bold;");
-    		 restaurantPane.add(nameLabel, 0, firstRowIndex + 2);
-             restaurantPane.add(new Label(Integer.toString(res.getRating()) + "/10"), 1, firstRowIndex + 2);
-             restaurantPane.add(new Label(res.getLocation()), 0, firstRowIndex + 3);
+    		nameLabel.setStyle("-fx-font-family: 'Helvetica'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-padding: 10px;");
+    		restaurantPane.add(nameLabel, 0, firstRowIndex + 3);
 
-             if(res.getImgUrl() != null && res.getImgUrl().contains("www.")) {
+    		int rating = res.getRating(); // Get the integer rating
+    		Label ratingLabel = new Label(rating + "/10");
+
+    		// Determine color based on rating value
+    		String textColor;
+    		if (rating >= 8) {
+    		    textColor = "#4CAF50"; // Green for high ratings
+    		} else if (rating >= 5) {
+    		    textColor = "#FFA500"; // Orange for medium ratings
+    		} else {
+    		    textColor = "#FF0000"; // Red for low ratings
+    		}
+
+    		// Set the style for the rating label
+    		ratingLabel.setStyle(
+    		    "-fx-font-size: 21px; " +
+    		    "-fx-text-fill: " + textColor + "; " + // Apply the dynamic color
+    		    "-fx-font-weight: bold;" +
+    		    "-fx-background-color: mintcream; " +
+    		    "-fx-padding: 10px 10px; " + // Adds space inside the circle
+    		    "-fx-border-radius: 50%; " +
+    		    "-fx-background-radius: 50%;"  // Makes the background a circle
+    		);
+
+    		// Add the label to the GridPane
+    		restaurantPane.add(ratingLabel, 1, firstRowIndex + 3);
+
+    		// Label for the location
+    		Label locationLabel = new Label(res.getLocation());
+    		locationLabel.setStyle("-fx-font-size: 17px; -fx-text-fill: gray; -fx-padding: 10px; ");
+    		restaurantPane.add(locationLabel, 0, firstRowIndex + 4);
+
+             if(res.getImgUrl() != "test") {
             	 Image image = new Image(res.getImgUrl());
                  ImageView imageView = new ImageView(image);
                  imageView.setFitHeight(70);
                  imageView.setPreserveRatio(true);
-                 restaurantPane.add(imageView, 4, firstRowIndex+2);
+                 restaurantPane.add(imageView, 0, firstRowIndex+5);
              }
 
     	}
