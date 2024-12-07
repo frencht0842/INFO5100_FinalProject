@@ -18,7 +18,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	static ArrayList <Restaurant> restaurants = new ArrayList();
+	static RestaurantList restaurants = new RestaurantList("My Restaurants");
 
     @Override
     public void start(Stage primaryStage) {
@@ -77,14 +77,14 @@ public class Main extends Application {
             String imgUrl = imgUrlInput.getText();
             System.out.println(name + rating + imgUrl + location);
             Restaurant newRestaurant = new Restaurant(name, rating, imgUrl, location);
-            restaurants.add(newRestaurant);
+            restaurants.addRestaurant(newRestaurant);
             newRestaurant.printRestaurantDetails();
             //TODO: clear inputs after submit
 
             // Change screens on submit
             GridPane root2 = renderRestaurants();
-            Button changeSceneButton = new Button("+ Add New Restaurant");
-            root2.add(changeSceneButton, 1, 0);
+            Button changeSceneButton = new Button("+ Add New ");
+            root2.add(changeSceneButton, 0, 0);
             changeSceneButton.setStyle(
                     "-fx-background-color: #4CAF50; " +  // Green background
                     "-fx-text-fill: white; " +          // White text color
@@ -96,6 +96,43 @@ public class Main extends Application {
                     "-fx-border-color: #388E3C; " +    // Border color
                     "-fx-border-width: 2px;"           // Border width
                 );
+
+            Button exportButton = new Button("> Export CSV");
+            exportButton.setStyle(
+                    "-fx-background-color: #4CAF50; " +  // Green background
+                    "-fx-text-fill: white; " +          // White text color
+                    "-fx-font-size: 14px; " +           // Font size
+                    "-fx-font-weight: bold; " +         // Bold text
+                    "-fx-padding: 10px 20px; " +        // Padding inside the button
+                    "-fx-background-radius: 5px; " +   // Rounded corners
+                    "-fx-border-radius: 5px; " +       // Border rounding
+                    "-fx-border-color: #388E3C; " +    // Border color
+                    "-fx-border-width: 2px;"           // Border width
+                );
+
+            exportButton.setOnAction(ev -> {
+                restaurants.writeRestaurantsToCSV();
+            });
+
+            Button importButton = new Button("< Import CSV");
+            importButton.setStyle(
+                    "-fx-background-color: #4CAF50; " +  // Green background
+                    "-fx-text-fill: white; " +          // White text color
+                    "-fx-font-size: 14px; " +           // Font size
+                    "-fx-font-weight: bold; " +         // Bold text
+                    "-fx-padding: 10px 20px; " +        // Padding inside the button
+                    "-fx-background-radius: 5px; " +   // Rounded corners
+                    "-fx-border-radius: 5px; " +       // Border rounding
+                    "-fx-border-color: #388E3C; " +    // Border color
+                    "-fx-border-width: 2px;"           // Border width
+                );
+            importButton.setOnAction(ev -> {
+            	restaurants = restaurants.importRestaurantsFromCSV("My Restaurants.csv");
+            	// TODO: refresh scene / reredner list
+            });
+
+            root2.add(exportButton, 1, 0);
+            root2.add(importButton, 2, 0);
             changeSceneButton.setOnAction(evt -> {
                 primaryStage.setScene(addRestaurantsScene);
             });
@@ -115,20 +152,18 @@ public class Main extends Application {
         restaurantPane.setStyle("-fx-padding: 20;");
 
         Label titleLabel = new Label("My Restaurants");
-        titleLabel.setStyle(
-            "-fx-font-family: 'Helvetica'; -fx-font-size: 30px; -fx-padding: 10px;"
-        );
+        titleLabel.setStyle("-fx-font-family: 'Helvetica'; -fx-font-size: 30px; -fx-padding: 10px;");
+
         restaurantPane.add(titleLabel, 0, 1);
 
 
 		// List of restaurants
-    	for(int i = 0; i < restaurants.size(); i++) {
-    		Restaurant res = restaurants.get(i);
+    	for(int i = 0; i < restaurants.getRestaurants().size(); i++) {
+    		Restaurant res = restaurants.getRestaurants().get(i);
 
     		int numRowsPerRes = 4;
     		int firstRowIndex = i * numRowsPerRes;
 
-    		// Label for the name
     		Label nameLabel = new Label(res.getName());
     		nameLabel.setStyle("-fx-font-family: 'Helvetica'; -fx-font-size: 21px; -fx-font-weight: bold; -fx-padding: 10px;");
     		restaurantPane.add(nameLabel, 0, firstRowIndex + 3);
@@ -165,7 +200,7 @@ public class Main extends Application {
     		locationLabel.setStyle("-fx-font-size: 17px; -fx-text-fill: gray; -fx-padding: 10px; ");
     		restaurantPane.add(locationLabel, 0, firstRowIndex + 4);
 
-             if(res.getImgUrl() != null && res.getImgUrl().contains("www.")) {
+             if(res.getImgUrl() != "test") {
             	 Image image = new Image(res.getImgUrl());
                  ImageView imageView = new ImageView(image);
                  imageView.setFitHeight(70);
