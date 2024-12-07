@@ -23,6 +23,9 @@ public class Main extends Application {
     	// TODO: use RestaurantList class
     	// TODO: Add print all restaurants method to resList class
       	GridPane root = new GridPane();
+        GridPane root2 = renderRestaurants(primaryStage);
+        Scene addRestaurantsScene = new Scene(root, 480, 800);
+        Scene viewRestaurantsScene = new Scene(root2, 480, 800);
 
       	// Restaurant inputs
         TextField nameInput = new TextField();
@@ -42,6 +45,8 @@ public class Main extends Application {
 
         Button submitButton = new Button("+ Create Restaurant");
 
+
+
         root.add(new Label("Name: "), 0, 0);
         root.add(nameInput, 1, 0);
 
@@ -60,9 +65,12 @@ public class Main extends Application {
         root.setVgap(10);
         root.setStyle("-fx-padding: 20;");
 
-        Scene addRestaurantsScene = new Scene(root, 480, 800);
+
+
+
+
         primaryStage.setTitle("Add a New Restaurant");
-        primaryStage.setScene(addRestaurantsScene);
+        primaryStage.setScene(viewRestaurantsScene);
 
 
 
@@ -79,28 +87,6 @@ public class Main extends Application {
             newRestaurant.printRestaurantDetails();
             //TODO: clear inputs after submit
 
-            // Change screens on submit
-            GridPane root2 = renderRestaurants();
-            Button changeSceneButton = new Button("+ Add New ");
-            Button exportButton = new Button("> Export CSV");
-            exportButton.setOnAction(ev -> {
-                restaurants.writeRestaurantsToCSV();
-            });
-
-            Button importButton = new Button("< Import CSV");
-            importButton.setOnAction(ev -> {
-            	restaurants = restaurants.importRestaurantsFromCSV("My Restaurants.csv");
-            	// TODO: refresh scene / reredner list
-            });
-
-            root2.add(changeSceneButton, 0,0);
-            root2.add(exportButton, 1, 0);
-            root2.add(importButton, 2, 0);
-            changeSceneButton.setOnAction(evt -> {
-                primaryStage.setScene(addRestaurantsScene);
-            });
-            Scene viewRestaurantsScene = new Scene(root2, 480, 800);
-
             primaryStage.setScene(viewRestaurantsScene);
         });
 
@@ -108,11 +94,37 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static GridPane renderRestaurants() {
+    public static GridPane renderRestaurants(Stage primaryStage) {
     	GridPane restaurantPane = new GridPane();
         restaurantPane.setHgap(10);
         restaurantPane.setVgap(10);
         restaurantPane.setStyle("-fx-padding: 20;");
+
+        // Change screens on submit
+        Button changeSceneButton = new Button("+ Add New ");
+        Button exportButton = new Button("> Export CSV");
+        exportButton.setOnAction(ev -> {
+            restaurants.writeRestaurantsToCSV();
+
+        });
+
+        Button importButton = new Button("< Import CSV");
+        importButton.setOnAction(ev -> {
+        	restaurants = restaurants.importRestaurantsFromCSV("My Restaurants.csv");
+//        	GridPane newPane = renderRestaurants();
+//        	Scene newScene = new Scene(restaurantPane, 480, 800);
+//        	primaryStage.setScene(newScene);
+//        	primaryStage.setScene(viewRestaurantsScene);
+        	// TODO: refresh scene / rerender list
+        });
+
+        restaurantPane.add(changeSceneButton, 0,0);
+        restaurantPane.add(exportButton, 1, 0);
+        restaurantPane.add(importButton, 2, 0);
+        changeSceneButton.setOnAction(evt -> {
+//            primaryStage.setScene(addRestaurantsScene);
+        });
+
 
         Label titleLabel = new Label("My Restaurants");
         titleLabel.setStyle("-fx-font-family: 'Brush Script MT'; -fx-font-size: 34px;");
@@ -125,6 +137,8 @@ public class Main extends Application {
 
     		int numRowsPerRes = 4;
     		int firstRowIndex = i * numRowsPerRes;
+
+
 
     		Label nameLabel = new Label(res.getName());
     		nameLabel.setStyle("-fx-font-weight: bold;");
