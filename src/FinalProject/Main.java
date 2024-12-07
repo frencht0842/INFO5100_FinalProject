@@ -16,12 +16,10 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-		static RestaurantList restaurants = new RestaurantList("My Restaurants");
+	static RestaurantList restaurants = new RestaurantList("My Restaurants");
 
     @Override
     public void start(Stage primaryStage) {
-    	// TODO: use RestaurantList class
-    	// TODO: Add print all restaurants method to resList class
       	GridPane root = new GridPane();
 
       	// Restaurant inputs
@@ -69,7 +67,6 @@ public class Main extends Application {
 
         submitButton.setOnAction(e -> {
             String name = nameInput.getText();
-            //String category = categoryInput.getText();
             int rating = Integer.parseInt(ratingInput.getText());
             String location = locationInput.getText();
             String imgUrl = imgUrlInput.getText();
@@ -126,7 +123,6 @@ public class Main extends Application {
                 );
             importButton.setOnAction(ev -> {
             	restaurants = restaurants.importRestaurantsFromCSV("My Restaurants.csv");
-            	// TODO: refresh scene / reredner list
             });
 
             root2.add(exportButton, 1, 0);
@@ -179,7 +175,6 @@ public class Main extends Application {
     		    textColor = "#FF0000"; // Red for low ratings
     		}
 
-    		// Set the style for the rating label
     		ratingLabel.setStyle(
     		    "-fx-font-size: 21px; " +
     		    "-fx-text-fill: " + textColor + "; " + // Apply the dynamic color
@@ -190,7 +185,6 @@ public class Main extends Application {
     		    "-fx-background-radius: 50%;"  // Makes the background a circle
     		);
 
-    		// Add the label to the GridPane
     		restaurantPane.add(ratingLabel, 1, firstRowIndex + 3);
 
     		// Label for the location

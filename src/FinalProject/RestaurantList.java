@@ -52,7 +52,7 @@ public class RestaurantList {
 	  public void writeRestaurantsToCSV() {
 	    String fileName = this.getName() + ".csv";
 	    try (FileWriter writer = new FileWriter(fileName)) {
-	        writer.append("Name,Rating,Location\n");
+	        writer.append("Name,Rating,Location,ImgUrl\n");
 
 	        for (Restaurant restaurant : this.restaurants) {
 	            writer.append(restaurant.getName())
@@ -60,6 +60,8 @@ public class RestaurantList {
 	                  .append(String.valueOf(restaurant.getRating()))
 	                  .append(",")
 	                  .append(restaurant.getLocation())
+	                  .append(",")
+	                  .append(String.valueOf(restaurant.getImgUrl()))
 	                  .append("\n");
 	        }
 	        System.out.println("CSV file written successfully: " + fileName);
@@ -74,18 +76,19 @@ public class RestaurantList {
 	        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 	            String line;
 
-	            // Skip the header line
 	            reader.readLine();
 
 	            while ((line = reader.readLine()) != null) {
 	                String[] fields = line.split(",");
 
-	                if (fields.length == 3) {
-	                    String name = fields[0].trim();
+	                if (fields.length == 4) {
+	                	System.out.print("heeeere");
+	                    String name = fields[0].replace(".csv", "").trim();
 	                    int rating = Integer.parseInt(fields[1].trim());
 	                    String location = fields[2].trim();
-
-	                    Restaurant restaurant = new Restaurant(name, rating, location);
+	                    String imgUrl = fields[3].trim();
+	                    System.out.println(fields[3] + " " + imgUrl);
+	                    Restaurant restaurant = new Restaurant(name, rating, imgUrl, location);
 	                    restaurantList.addRestaurant(restaurant);
 	                } else {
 	                    System.err.println("Invalid line format: " + line);
